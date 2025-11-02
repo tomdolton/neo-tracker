@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { format as formatDate } from 'date-fns';
 
 type Analysis = {
   analysis_date: string;
@@ -111,7 +112,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
     const barWidth = Math.max(4, Math.min(40, stepX * 0.8));
 
     // Axes
-    const xAxis = d3.axisBottom<Date>(x).ticks(Math.min(6, prepared.length)).tickFormat(d3.timeFormat('%Y-%m-%d') as any);
+    const xAxis = d3.axisBottom<Date>(x).ticks(Math.min(6, prepared.length)).tickFormat((d) => formatDate(d as Date, 'dd/MM/yy'));
     const yAxisLeft = d3.axisLeft(y0).ticks(5);
     const yAxisRight = d3
       .axisRight(y1)
@@ -178,7 +179,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
       .join(enter => {
         const lg = enter.append('g').attr('transform', (_, i) => `translate(${i * 190},0)`); // a bit more spacing between legend items
         lg.append('rect').attr('width', 12).attr('height', 12).attr('fill', d => d.color).attr('y', -10).attr('rx', 2);
-        lg.append('text').text(d => d.label).attr('x', 18).attr('y', 0).attr('dominant-baseline', 'ideographic').attr('fill', '#6b7280');
+        lg.append('text').text(d => d.label).attr('x', 18).attr('y', 5).attr('dominant-baseline', 'ideographic').attr('fill', '#6b7280');
         return lg;
       });
 
@@ -220,11 +221,11 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
 
         tooltip
           .html(
-            `<div style="font-weight:600;margin-bottom:4px;">${d3.timeFormat('%Y-%m-%d')(d.date)}</div>
+            `<div style="font-weight:600;margin-bottom:4px;">${formatDate(d.date, 'dd/MM/yy')}</div>
              <div>NEO Count: <b>${d.total}</b></div>
              <div>Closest Miss: <b>${missStr}</b></div>
              <div>Max Velocity: <b>${d3.format('.2f')(velKms)} km/s</b></div>
-             <div>Avg Diameter: <b>${d.avgMin.toFixed?.(2) ?? d.avgMin}–${d.avgMax.toFixed?.(2) ?? d.avgMax} m</b></div>`
+             <div>Avg Diameter: <b>${d.avgMin.toFixed?.(2) ?? d.avgMin} - ${d.avgMax.toFixed?.(2) ?? d.avgMax} m</b></div>`
           )
           .style('left', `${left}px`)
           .style('top', `${margin.top + y1(metricAccessor(d)) + 6}px`)
@@ -236,6 +237,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
 
 
     return () => {
+      svg.selectAll('*').remove();
       d3.select(containerRef.current).selectAll('.neo-chart-tooltip').remove();
     };
   }, [prepared, width, height, lineMetric]);
