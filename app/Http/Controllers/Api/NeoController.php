@@ -22,10 +22,8 @@ class NeoController extends Controller
         $query = DailyAnalysis::query();
 
         if ($request->has('start_date') && $request->has('end_date')) {
-            $query->whereBetween('analysis_date', [
-                $request->start_date,
-                $request->end_date
-            ]);
+            $query->whereDate('analysis_date', '>=', $request->start_date)
+                  ->whereDate('analysis_date', '<=', $request->end_date);
         }
 
         $analyses = $query->orderBy('analysis_date', 'desc')->get();
