@@ -10,6 +10,7 @@ import { NeoChart } from '@/components/NeoChart';
 import { StatCard } from '@/components/StatCard';
 import { PageHeader } from '@/components/PageHeader';
 import { MetricSelect } from '@/components/MetricSelect';
+import { AnalysesTable } from '@/components/AnalysesTable';
 
 export default function NeoAnalysis() {
   const [startDate, setStartDate] = useState<Date | undefined>();
@@ -18,6 +19,12 @@ export default function NeoAnalysis() {
   const [lineMetric, setLineMetric] = useState<'smallest_miss_distance' | 'max_velocity'>('smallest_miss_distance'); // new
 
   const { data: analyses = [], isLoading, isError, error } = useAnalyses(filters);
+
+  const friendlyError =
+    (error as any)?.response?.data?.message ??
+    (error as any)?.response?.data?.errors?.end_date?.[0] ??
+    error?.message ??
+    'Something went wrong';
 
   const handleFilter = () => {
       if (startDate && endDate) {
@@ -57,7 +64,7 @@ export default function NeoAnalysis() {
                   {isError && (
                       <div className="mb-8 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-400">
                           <p className="font-semibold">Error loading data</p>
-                          <p className="text-sm">{error?.message || 'Something went wrong'}</p>
+                          <p className="text-sm">{friendlyError}</p>
                       </div>
                   )}
 
@@ -138,20 +145,21 @@ export default function NeoAnalysis() {
                     )}
                   </div>
 
-                  {/* Data Table Section */}
-                  <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                      <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                          Analysis Data Table ({analyses.length} records)
-                      </h2>
-                      <div className="overflow-x-auto">
-                          <div className="h-64 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
-                              {isLoading && (
-                                  <div className="flex h-full items-center justify-center">
-                                      <span className="text-gray-500 dark:text-gray-400">Loading...</span>
-                                  </div>
-                              )}
-                          </div>
-                      </div>
+                    {/* Table Section */}
+                    <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                            Analysis Data Table ({analyses.length} records)
+                        </h2>
+
+                        <div className="overflow-x-auto">
+                            {isLoading ? (
+                                <div className="flex h-64 items-center justify-center">
+                                    <span className="text-gray-500 dark:text-gray-400">Loading...</span>
+                                </div>
+                            ) : (
+                                <AnalysesTable data={analyses as any} />
+                            )}
+                        </div>
                   </div>
               </main>
           </div>
