@@ -11,6 +11,7 @@ import { StatCard } from '@/components/StatCard';
 import { PageHeader } from '@/components/PageHeader';
 import { MetricSelect } from '@/components/MetricSelect';
 import { AnalysesTable } from '@/components/AnalysesTable';
+import { calculateNeoStatistics } from '@/lib/neoStats';
 
 export default function NeoAnalysis() {
   const [startDate, setStartDate] = useState<Date | undefined>();
@@ -42,16 +43,7 @@ export default function NeoAnalysis() {
   };
 
   // Calculate summary statistics
-  const totalNeoCount = analyses.reduce((sum, a) => sum + a.total_neo_count, 0);
-  const avgDiameter = analyses.length > 0
-      ? (analyses.reduce((sum, a) => sum + (Number(a.average_diameter_min) + Number(a.average_diameter_max)) / 2, 0) / analyses.length).toFixed(2)
-      : '0';
-  const maxVelocity = analyses.length > 0
-      ? Math.max(...analyses.map(a => Number(a.max_velocity))).toFixed(2)
-      : '0';
-  const closestMiss = analyses.length > 0
-      ? Math.min(...analyses.map(a => Number(a.smallest_miss_distance))).toFixed(2)
-      : '0';
+  const { totalNeoCount, avgDiameter, maxVelocity, closestMiss } = calculateNeoStatistics(analyses);
 
   return (
       <>
