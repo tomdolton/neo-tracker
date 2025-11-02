@@ -82,6 +82,16 @@ class NeoDataService
                     continue; // Skip if no matching close approach
                 }
 
+                // Convert kilometers to meters for miss distance
+                $missDistanceMeters = isset($closeApproach['miss_distance']['kilometers'])
+                    ? floatval($closeApproach['miss_distance']['kilometers']) * 1000
+                    : 0;
+
+                // Convert kilometers per second to meters per second for velocity
+                $velocityMetersPerSecond = isset($closeApproach['relative_velocity']['kilometers_per_second'])
+                    ? floatval($closeApproach['relative_velocity']['kilometers_per_second']) * 1000
+                    : 0;
+
                 // Transform and store using Eloquent
                 NearEarthObject::updateOrCreate(
                     [
@@ -94,8 +104,8 @@ class NeoDataService
                         'estimated_diameter_max' => $neo['estimated_diameter']['meters']['estimated_diameter_max'] ?? 0,
                         'is_hazardous' => $neo['is_potentially_hazardous_asteroid'] ?? false,
                         'absolute_magnitude' => $neo['absolute_magnitude_h'] ?? 0,
-                        'miss_distance' => $closeApproach['miss_distance']['meters'] ?? 0,
-                        'relative_velocity' => $closeApproach['relative_velocity']['meters_per_second'] ?? 0,
+                        'miss_distance' => $missDistanceMeters,
+                        'relative_velocity' => $velocityMetersPerSecond,
                     ]
                 );
 
