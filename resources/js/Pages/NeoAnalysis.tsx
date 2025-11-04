@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 import { DatePicker } from '@/components/DatePicker';
 import { format } from 'date-fns';
 import { useAnalyses } from '@/hooks/useAnalyses';
@@ -61,7 +62,7 @@ export default function NeoAnalysis() {
                   )}
 
                   {/* Date Range Filter */}
-                  <div className="mb-8 rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                  <Card className="mb-8">
                       <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                           Filter by Date Range
                       </h2>
@@ -105,7 +106,7 @@ export default function NeoAnalysis() {
                               Clear
                           </Button>
                       </div>
-                  </div>
+                  </Card>
 
                   {/* Statistics Summary Cards */}
                   <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -120,7 +121,7 @@ export default function NeoAnalysis() {
                   </div>
 
                   {/* D3.js Chart Section */}
-                  <div className="mb-8 rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                  <Card className="mb-8">
                     <div className="mb-4 flex flex-col md:flex-row items-center justify-between gap-4">
                         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                         NEO Analysis Over Time
@@ -135,10 +136,10 @@ export default function NeoAnalysis() {
                     ) : (
                       <NeoChart data={analyses} lineMetric={lineMetric} />
                     )}
-                  </div>
+                  </Card>
 
                     {/* Table Section */}
-                    <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                    <Card>
                         <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                             Analysis Data Table ({analyses.length} records)
                         </h2>
@@ -152,7 +153,7 @@ export default function NeoAnalysis() {
                                 <AnalysesTable data={analyses as any} />
                             )}
                         </div>
-                  </div>
+                  </Card>
               </main>
           </div>
       </>
