@@ -12,6 +12,7 @@ import { StatCard } from '@/components/StatCard';
 import { PageHeader } from '@/components/PageHeader';
 import { MetricSelect } from '@/components/MetricSelect';
 import { AnalysesTable } from '@/components/AnalysesTable';
+import { ErrorAlert } from '@/components/ErrorAlert';
 import { calculateNeoStatistics } from '@/lib/neoStats';
 
 export default function NeoAnalysis() {
@@ -20,13 +21,8 @@ export default function NeoAnalysis() {
   const [filters, setFilters] = useState<AnalysesFilters | undefined>();
   const [lineMetric, setLineMetric] = useState<'smallest_miss_distance' | 'max_velocity'>('smallest_miss_distance');
 
+  // Fetch analyses data with applied filters
   const { data: analyses = [], isLoading, isError, error } = useAnalyses(filters);
-
-  const friendlyError =
-    (error as any)?.response?.data?.message ??
-    (error as any)?.response?.data?.errors?.end_date?.[0] ??
-    error?.message ??
-    'Something went wrong';
 
   const handleFilter = () => {
       if (startDate && endDate) {
@@ -54,12 +50,7 @@ export default function NeoAnalysis() {
               <PageHeader title="Near-Earth Objects Analysis Dashboard" />
 
               <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-                  {isError && (
-                      <div className="mb-8 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-400">
-                          <p className="font-semibold">Error loading data</p>
-                          <p className="text-sm">{friendlyError}</p>
-                      </div>
-                  )}
+                  {isError && <ErrorAlert error={error} />}
 
                   {/* Date Range Filter */}
                   <Card className="mb-8">
