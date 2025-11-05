@@ -29,6 +29,7 @@ class DailyAnalysis extends Model
 
     public function nearEarthObjects(): BelongsToMany
     {
-        return $this->belongsToMany(NearEarthObject::class);
+        return $this->belongsToMany(NearEarthObject::class)
+            ->withTimestamps();
     }
 }

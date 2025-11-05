@@ -71,13 +71,12 @@ class NeoDataService
      */
     private function transformAndStore(array $rawNeoData, string $date): int
     {
-        $storedCount = 0;
+        return DB::transaction(function () use ($rawNeoData, $date) {
+            $count = 0;
 
-        DB::transaction(function () use ($rawNeoData, $date, &$storedCount) {
             foreach ($rawNeoData as $neo) {
                 // Get the correct close approach data for this date
                 $closeApproach = $this->findCloseApproachForDate($neo, $date);
-
                 if (!$closeApproach) {
                     continue; // Skip if no matching close approach
                 }
@@ -109,11 +108,11 @@ class NeoDataService
                     ]
                 );
 
-                $storedCount++;
+                $count++;
             }
-        });
 
-        return $storedCount;
+            return $count;
+        });
     }
 
     /**
