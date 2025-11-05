@@ -47,11 +47,11 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
     return parsed;
   }, [data]);
 
-  // Chart dimensions setup
+  // Chart setup
   useEffect(() => {
     const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
 
+    // Chart dimensions and margins
     const W = width;
     const H = height;
     const margin = { top: 80, right: 64, bottom: 40, left: 44 };
@@ -90,7 +90,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
     // Y-Axis scales
     // y-0 = bar (total NEO count)
     // y-1 = line (selected metric: smallest_miss_distance/max_velocity)
-		// Both add 10% headroom
+    // Both add 10% headroom
     const y0Max = d3.max(preparedData, d => d.total) ?? 0;
     const y0 = d3.scaleLinear()
     	.domain([0, y0Max ? y0Max * 1.1 : 1])
@@ -107,14 +107,13 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
       .nice()
       .range([innerH, 0]);
 
-		// X scale
+    // X-Axis scale
     const x = d3.scaleTime()
       .domain(xDomain)
       .range([0, innerW]);
 
     // Bar width sizing based on actual time step
-    const stepX =
-      preparedData.length > 1 ? x(dates[1]) - x(dates[0]) : innerW;
+    const stepX = preparedData.length > 1 ? x(dates[1]) - x(dates[0]) : innerW;
     const barWidth = Math.max(4, Math.min(40, stepX * 0.8));
 
     // Axes rendering
@@ -127,7 +126,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
 			.axisLeft(y0)
 			.ticks(5);
 
-		// Right Y-Axis shows either miss distance (m) or velocity (km/s)
+    // Right Y-Axis shows either miss distance (m) or velocity (km/s)
     const yAxisRight = d3
       .axisRight(y1)
       .ticks(5)
@@ -140,10 +139,21 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
         }
       });
 
-		// Draw axes
-    g.append('g').attr('transform', `translate(0,${innerH})`).call(xAxis).selectAll('text').style('font-size', '11px');
-    g.append('g').call(yAxisLeft).selectAll('text').style('font-size', '11px');
-    g.append('g').attr('transform', `translate(${innerW},0)`).call(yAxisRight).selectAll('text').style('font-size', '11px');
+    // Draw axes
+    g.append('g')
+      .attr('transform', `translate(0,${innerH})`)
+      .call(xAxis)
+      .selectAll('text')
+      .style('font-size', '11px');
+    g.append('g')
+      .call(yAxisLeft)
+      .selectAll('text')
+      .style('font-size', '11px');
+    g.append('g')
+      .attr('transform', `translate(${innerW},0)`)
+      .call(yAxisRight)
+      .selectAll('text')
+      .style('font-size', '11px');
 
     // Renders bars for total NEO count, centered on each date.
     const barColor = '#60a5fa';
