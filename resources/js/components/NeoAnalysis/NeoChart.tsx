@@ -169,7 +169,7 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
       .attr('opacity', 0.85);
 
     // Renders curved line for selected metric
-    const lineColor = lineMetric === 'smallest_miss_distance' ? '#34d399' : '#f59e0b';
+    const lineColor = lineMetric === 'smallest_miss_distance' ? '#dc2626' : '#f97316';
     const lineGen = d3
       .line<(typeof preparedData)[number]>()
       .x(d => x(d.date))
