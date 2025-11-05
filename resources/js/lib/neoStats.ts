@@ -2,9 +2,9 @@ import type { DailyAnalysis } from '@/types/neo';
 
 export interface NeoStatistics {
   totalNeoCount: number;
-  avgDiameter: string;
-  maxVelocity: string;
-  closestMiss: string;
+  avgDiameter: number;
+  maxVelocity: number;
+  closestMiss: number;
 }
 
 /**
@@ -18,33 +18,33 @@ export function calculateTotalNeoCount(analyses: DailyAnalysis[]): number {
  * Calculate the average diameter across all analyses
  * Returns the mean of (min + max) / 2 for each analysis
  */
-export function calculateAverageDiameter(analyses: DailyAnalysis[]): string {
-  if (analyses.length === 0) return '0';
+export function calculateAverageDiameter(analyses: DailyAnalysis[]): number {
+  if (analyses.length === 0) return 0;
 
   const totalAvg = analyses.reduce(
     (sum, a) => sum + (Number(a.average_diameter_min) + Number(a.average_diameter_max)) / 2,
     0
   );
 
-  return (totalAvg / analyses.length).toFixed(2);
+  return totalAvg / analyses.length;
 }
 
 /**
  * Find the maximum velocity across all analyses
  */
-export function calculateMaxVelocity(analyses: DailyAnalysis[]): string {
-  if (analyses.length === 0) return '0';
+export function calculateMaxVelocity(analyses: DailyAnalysis[]): number {
+  if (analyses.length === 0) return 0;
 
-  return Math.max(...analyses.map(a => Number(a.max_velocity))).toFixed(2);
+  return Math.max(...analyses.map(a => Number(a.max_velocity)));
 }
 
 /**
  * Find the smallest miss distance across all analyses
  */
-export function calculateClosestMiss(analyses: DailyAnalysis[]): string {
-  if (analyses.length === 0) return '0';
+export function calculateClosestMiss(analyses: DailyAnalysis[]): number {
+  if (analyses.length === 0) return 0;
 
-  return Math.min(...analyses.map(a => Number(a.smallest_miss_distance))).toFixed(2);
+  return Math.min(...analyses.map(a => Number(a.smallest_miss_distance)));
 }
 
 /**
