@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { DailyAnalysis, AnalysesFilters } from '@/types/neo';
+import type { DailyAnalysis, AnalysesFilters } from '@/types/neo';
 
 const fetchAnalyses = async (filters?: AnalysesFilters): Promise<DailyAnalysis[]> => {
     const params: Record<string, string> = {};

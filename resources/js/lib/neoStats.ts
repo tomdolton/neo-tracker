@@ -1,4 +1,4 @@
-import { DailyAnalysis } from '@/types/neo';
+import type { DailyAnalysis } from '@/types/neo';
 
 export interface NeoStatistics {
   totalNeoCount: number;

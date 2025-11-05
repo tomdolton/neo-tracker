@@ -18,14 +18,16 @@ class NeoController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
-
+        // Build the query
         $query = DailyAnalysis::query();
 
+        // Apply date range filter if provided
         if ($request->has('start_date') && $request->has('end_date')) {
             $query->whereDate('analysis_date', '>=', $request->start_date)
                   ->whereDate('analysis_date', '<=', $request->end_date);
         }
 
+        // Get the analyses ordered by date descending
         $analyses = $query->orderBy('analysis_date', 'desc')->get();
 
         return response()->json($analyses);

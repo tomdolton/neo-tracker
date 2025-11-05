@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { DatePicker } from '@/components/DatePicker';
 import { format } from 'date-fns';
 import { useAnalyses } from '@/hooks/useAnalyses';
-import { AnalysesFilters } from '@/types/neo';
+import type { AnalysesFilters } from '@/types/neo';
 import { NeoChart } from '@/components/NeoChart';
 import { StatCard } from '@/components/StatCard';
 import { PageHeader } from '@/components/PageHeader';
@@ -18,7 +18,7 @@ export default function NeoAnalysis() {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [filters, setFilters] = useState<AnalysesFilters | undefined>();
-  const [lineMetric, setLineMetric] = useState<'smallest_miss_distance' | 'max_velocity'>('smallest_miss_distance'); // new
+  const [lineMetric, setLineMetric] = useState<'smallest_miss_distance' | 'max_velocity'>('smallest_miss_distance');
 
   const { data: analyses = [], isLoading, isError, error } = useAnalyses(filters);
 
