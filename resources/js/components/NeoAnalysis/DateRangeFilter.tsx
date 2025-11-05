@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { DatePicker } from '@/components/DatePicker';
+import { DatePicker } from '@/components/ui/DatePicker';
 
 interface DateRangeFilterProps {
     startDate: Date | undefined;

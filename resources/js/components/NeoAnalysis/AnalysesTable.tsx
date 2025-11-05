@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import type { DailyAnalysis } from '@/types/neo';
 
 export interface AnalysesTableProps {

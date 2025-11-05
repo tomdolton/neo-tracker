@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { format as formatDate } from 'date-fns';
 import type { DailyAnalysis } from '@/types/neo';
-import type { LineMetric } from '@/components/MetricSelect';
+import type { LineMetric } from '@/components/NeoAnalysis/MetricSelect';
 
 export interface NeoChartProps {
   data: DailyAnalysis[];

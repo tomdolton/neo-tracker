@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 
 import { Card } from '@/components/ui/card';
-import { NeoChart } from '@/components/NeoChart';
-import { StatCard } from '@/components/StatCard';
-import { PageHeader } from '@/components/PageHeader';
-import { MetricSelect } from '@/components/MetricSelect';
-import { AnalysesTable } from '@/components/AnalysesTable';
-import { ErrorAlert } from '@/components/ErrorAlert';
-import { DateRangeFilter } from '@/components/DateRangeFilter';
+import { NeoChart } from '@/components/NeoAnalysis/NeoChart';
+import { StatCard } from '@/components/NeoAnalysis/StatCard';
+import { PageHeader } from '@/components/NeoAnalysis/PageHeader';
+import { MetricSelect } from '@/components/NeoAnalysis/MetricSelect';
+import { AnalysesTable } from '@/components/NeoAnalysis/AnalysesTable';
+import { ErrorAlert } from '@/components/NeoAnalysis/ErrorAlert';
+import { DateRangeFilter } from '@/components/NeoAnalysis/DateRangeFilter';
 
 import { useAnalyses } from '@/hooks/useAnalyses';
 import { calculateNeoStatistics } from '@/lib/neoStats';
