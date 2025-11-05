@@ -1,9 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { DatePicker } from '@/components/DatePicker';
 import { format } from 'date-fns';
 import { useAnalyses } from '@/hooks/useAnalyses';
 import type { AnalysesFilters } from '@/types/neo';
@@ -13,6 +10,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { MetricSelect } from '@/components/MetricSelect';
 import { AnalysesTable } from '@/components/AnalysesTable';
 import { ErrorAlert } from '@/components/ErrorAlert';
+import { DateRangeFilter } from '@/components/DateRangeFilter';
 import { calculateNeoStatistics } from '@/lib/neoStats';
 
 export default function NeoAnalysis() {
@@ -52,52 +50,15 @@ export default function NeoAnalysis() {
               <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                   {isError && <ErrorAlert error={error} />}
 
-                  {/* Date Range Filter */}
-                  <Card className="mb-8">
-                      <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                          Filter by Date Range
-                      </h2>
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-                          <div className="flex-1">
-                              <Label htmlFor="start-date" className="mb-2">
-                                  Start Date
-                              </Label>
-                              <DatePicker
-                                  date={startDate}
-                                  onSelect={setStartDate}
-                                  placeholder="Select start date"
-                              />
-                          </div>
-
-                          <div className="flex-1">
-                              <Label htmlFor="end-date" className="mb-2">
-                                  End Date
-                              </Label>
-                              <DatePicker
-                                  date={endDate}
-                                  onSelect={setEndDate}
-                                  placeholder="Select end date"
-                              />
-                          </div>
-
-                          <Button
-                              onClick={handleFilter}
-                              disabled={!startDate || !endDate || isLoading}
-                              className="w-full sm:w-32"
-                          >
-                              {isLoading ? 'Loading...' : 'Filter'}
-                          </Button>
-
-                          <Button
-                              onClick={handleClear}
-                              variant="outline"
-                              disabled={isLoading}
-                              className="w-full sm:w-32"
-                          >
-                              Clear
-                          </Button>
-                      </div>
-                  </Card>
+                  <DateRangeFilter
+                      startDate={startDate}
+                      endDate={endDate}
+                      onStartDateChange={setStartDate}
+                      onEndDateChange={setEndDate}
+                      onFilter={handleFilter}
+                      onClear={handleClear}
+                      isLoading={isLoading}
+                  />
 
                   {/* Statistics Summary Cards */}
                   <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
