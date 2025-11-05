@@ -1,9 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import { Card } from '@/components/ui/card';
 import { format } from 'date-fns';
-import { useAnalyses } from '@/hooks/useAnalyses';
-import type { AnalysesFilters } from '@/types/neo';
+
+import { Card } from '@/components/ui/card';
 import { NeoChart } from '@/components/NeoChart';
 import { StatCard } from '@/components/StatCard';
 import { PageHeader } from '@/components/PageHeader';
@@ -11,7 +10,10 @@ import { MetricSelect } from '@/components/MetricSelect';
 import { AnalysesTable } from '@/components/AnalysesTable';
 import { ErrorAlert } from '@/components/ErrorAlert';
 import { DateRangeFilter } from '@/components/DateRangeFilter';
+
+import { useAnalyses } from '@/hooks/useAnalyses';
 import { calculateNeoStatistics } from '@/lib/neoStats';
+import type { AnalysesFilters } from '@/types/neo';
 
 export default function NeoAnalysis() {
   const [startDate, setStartDate] = useState<Date | undefined>();

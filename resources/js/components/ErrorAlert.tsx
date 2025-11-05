@@ -2,7 +2,6 @@ interface ErrorAlertProps {
     error: Error | null;
 }
 
-
 export function ErrorAlert({ error }: ErrorAlertProps) {
     if (!error) return null;
 

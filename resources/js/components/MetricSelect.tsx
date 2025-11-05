@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 export type LineMetric = 'smallest_miss_distance' | 'max_velocity';
 
@@ -13,7 +14,7 @@ export interface MetricSelectProps {
 
 export function MetricSelect({ id = 'metric-select', label = 'Line metric', value, onChange, className }: MetricSelectProps) {
   return (
-    <div className={`flex items-center gap-2 ${className ?? ''}`}>
+    <div className={cn('flex items-center gap-2', className)}>
       <Label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400">
         {label}
       </Label>
