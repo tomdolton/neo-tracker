@@ -1,10 +1,10 @@
 import { Card } from '@/components/ui/card';
 
-export type StatCardProps = {
+export interface StatCardProps {
   title: string;
   value: number;
   loading?: boolean;
-};
+}
 
 export function StatCard({ title, value, loading }: StatCardProps) {
   return (

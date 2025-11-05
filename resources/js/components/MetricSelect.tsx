@@ -3,13 +3,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 export type LineMetric = 'smallest_miss_distance' | 'max_velocity';
 
-export type MetricSelectProps = {
+export interface MetricSelectProps {
   id?: string;
   label?: string;
   value: LineMetric;
   onChange: (value: LineMetric) => void;
   className?: string;
-};
+}
 
 export function MetricSelect({ id = 'metric-select', label = 'Line metric', value, onChange, className }: MetricSelectProps) {
   return (

@@ -1,25 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { format as formatDate } from 'date-fns';
+import type { DailyAnalysis } from '@/types/neo';
+import type { LineMetric } from '@/components/MetricSelect';
 
-type Analysis = {
-  analysis_date: string;
-  total_neo_count: number;
-  average_diameter_min: number | string;
-  average_diameter_max: number | string;
-  max_velocity: number | string;
-  smallest_miss_distance: number | string;
-};
-
-type LineMetric = 'smallest_miss_distance' | 'max_velocity';
-
-type Props = {
-  data: Analysis[];
+export interface NeoChartProps {
+  data: DailyAnalysis[];
   height?: number;
   lineMetric?: LineMetric;
-};
+}
 
-export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_distance' }: Props) {
+export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_distance' }: NeoChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState<number>(800);

@@ -1,6 +1,6 @@
-export type PageHeaderProps = {
+export interface PageHeaderProps {
   title: string;
-};
+}
 
 export function PageHeader({ title }: PageHeaderProps) {
   return (

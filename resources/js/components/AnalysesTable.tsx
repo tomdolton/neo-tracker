@@ -2,10 +2,10 @@ import { format } from 'date-fns';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import type { DailyAnalysis } from '@/types/neo';
 
-export type AnalysesTableProps = {
+export interface AnalysesTableProps {
   data: DailyAnalysis[];
   className?: string;
-};
+}
 
 
 export function AnalysesTable({ data, className }: AnalysesTableProps) {

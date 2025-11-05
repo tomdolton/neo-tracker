@@ -102,7 +102,7 @@ export default function NeoAnalysis() {
                                     <span className="text-gray-500 dark:text-gray-400">Loading...</span>
                                 </div>
                             ) : (
-                                <AnalysesTable data={analyses as any} />
+                                <AnalysesTable data={analyses} />
                             )}
                         </div>
                   </Card>
