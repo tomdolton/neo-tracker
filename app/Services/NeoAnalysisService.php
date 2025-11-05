@@ -33,7 +33,7 @@ class NeoAnalysisService
             );
 
             // Sync the NEOs with this analysis (many-to-many)
-            $analysis->nearEarthObjects()->sync($neos->pluck('id'));
+            $analysis->nearEarthObjects()->syncWithoutDetaching($neos->pluck('id'));
 
             return $analysis;
         });
