@@ -51,6 +51,9 @@ export function NeoChart({ data, height = 420, lineMetric = 'smallest_miss_dista
   useEffect(() => {
     const svg = d3.select(svgRef.current);
 
+    // Clear previous render
+    svg.selectAll('*').remove();
+
     // Chart dimensions and margins
     const W = width;
     const H = height;
